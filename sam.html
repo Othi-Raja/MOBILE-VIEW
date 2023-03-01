@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="js.js"></script>
+
+</head>
+<body bgcolor="white">
+    <div mbsc-form>
+        <div class="mbsc-align-center">
+            <div class="mbsc-note mbsc-note-primary">Use the popup popup with or without return value.</div>
+        </div>
+        <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">Without return value</div>
+            <div class="mbsc-btn-group-block">
+                <button mbsc-button id="showAccount">Show Popup</button>
+            </div>
+        </div>
+        <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">With return value</div>
+            <label> Update
+                <input mbsc-input id="showPopup" placeholder="Please Select..." readonly />
+            </label>
+        </div>
+        <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">With scrollable content</div>
+            <div class="mbsc-btn-group-block">
+                <button mbsc-button id="showScrollable">Show Popup</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="demo" class="mbsc-cloak">
+        <div class="mbsc-align-center mbsc-padding">
+            <img src="https://img.mobiscroll.com/demos/f1.png">
+            <h3>Liza Taylor</h3>
+            <script>
+                mobiscroll.settings = {
+                    theme: 'ios',
+                    themeVariant: 'light'
+                };
+                
+                $(function () {
+                
+                    var account = $('#demo').mobiscroll().popup({
+                            display: 'center'
+                        }).mobiscroll('getInst'),
+                
+                        update = $('#list').mobiscroll().popup({
+                            display: 'center',
+                            onSet: function (event, inst) {
+                                $('#showPopup').val($('input[name="update"]:checked').val());
+                            }
+                        }).mobiscroll('getInst'),
+                
+                        scrollable = $('#scrollable').mobiscroll().popup({
+                            display: 'center',
+                            scrollLock: false,
+                            cssClass: 'mbsc-no-padding md-content-scroll',
+                            buttons: []
+                        }).mobiscroll('getInst');
+                
+                    $('#listview').mobiscroll().listview({
+                        enhance: true,
+                        swipe: false,
+                        onItemTap: function () {
+                            scrollable.hide();
+                            mobiscroll.toast({
+                                message: event.target.textContent + ' clicked'
+                            });
+                        }
+                    });
+                
+                    $('#showAccount').click(function () {
+                        account.show();
+                        return false;
+                    });
+                
+                    $('#showPopup').click(function () {
+                        update.show();
+                        return false;
+                    });
+                
+                    $('#showScrollable').click(function () {
+                        scrollable.show();
+                        return false;
+                    });
+                
+                });
+            </script>
+</body>
+</html>
